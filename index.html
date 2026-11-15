@@ -1,1 +1,64 @@
-feat: criação da estrutura base HTML da interface principal
+cat << 'EOF' > index.html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MVP - Gestão Comunitária Sustentável (ODS)</title>
+  <style>
+    :root { --bg: #f4f7f6; --card: #ffffff; --text: #1f2937; --primary: #0f766e; }
+    body.alto-contraste { --bg: #000000; --card: #111111; --text: #ffff00; --primary: #00ffcc; }
+    body { font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 2rem; transition: 0.2s; }
+    .container { max-width: 720px; margin: auto; background: var(--card); padding: 2rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); border: 1px solid #cbd5e1; }
+    header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+    button { background: var(--primary); color: #fff; border: none; padding: 0.6rem 1rem; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    body.alto-contraste button { color: #000; }
+    input { width: 70%; padding: 0.6rem; border: 1px solid #94a3b8; border-radius: 6px; }
+    ul { list-style: none; padding: 0; margin-top: 1.5rem; }
+    li { padding: 0.75rem; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; }
+    .badge { background: #ccfbf1; color: #115e59; padding: 0.2rem 0.6rem; border-radius: 99px; font-size: 0.85rem; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <div>
+        <h1>ConectaComunidade MVP</h1>
+        <span class="badge">Alinhado ao ODS 10 & ODS 11</span>
+      </div>
+      <button id="btnContraste" aria-label="Alternar modo de alto contraste" onclick="document.body.classList.toggle('alto-contraste')">
+        👁️ Alto Contraste
+      </button>
+    </header>
+
+    <section aria-label="Registro de Ações Comunitárias">
+      <p>Cadastre e acompanhe iniciativas locais de apoio e inclusão social:</p>
+      <div style="display:flex; gap:8px;">
+        <input type="text" id="novaAcao" placeholder="Ex: Coleta seletiva no bairro..." aria-label="Descrição da ação comunitária">
+        <button onclick="adicionarAcao()">Registrar Ação</button>
+      </div>
+      <ul id="listaAcoes">
+        <li><span>Ponto de coleta de recicláveis — Praça Central</span> <strong>Ativo</strong></li>
+        <li><span>Oficina gratuita de capacitação digital</span> <strong>Ativo</strong></li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    function adicionarAcao() {
+      const input = document.getElementById('novaAcao');
+      if (!input.value.trim()) return;
+      const li = document.createElement('li');
+      const span = document.createElement('span');
+      span.textContent = input.value.trim();
+      const strong = document.createElement('strong');
+      strong.textContent = 'Novo';
+      li.append(span, strong);
+      document.getElementById('listaAcoes').prepend(li);
+      input.value = '';
+    }
+  </script>
+</body>
+</html>
+EOF
+npx serve -l 3000
